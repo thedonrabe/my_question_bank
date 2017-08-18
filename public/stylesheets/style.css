@@ -1,0 +1,48 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: lightblue;
+}
+
+a {
+  color: #00b7ff;
+}
+
+.questionForm {
+  padding: 10px;
+  width: auto;
+}
+
+.questionField {
+  margin: 15px;
+}
+
+.lnk {
+  color: black;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.btn {
+  display: block;
+  padding: 10px;
+  margin-bottom: 15px;
+  width: 150px;
+}
+
+.form {
+  text-align: left;
+}
+
+.backBtn {
+  display: block;
+}
+
+.questionBtn {
+  width: 400px;
+  height: 100px;
+}
+
+.loggedIn {
+  text-align: right;
+}

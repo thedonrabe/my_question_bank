@@ -1,0 +1,21 @@
+extends layout
+
+
+
+block content
+
+
+
+  h1= title
+  p Welcome to #{title}
+  <form method= "POST">
+    a(type= "button", class= "btn", name="addNew", value= "addNew", href="newquestion") #{buttonText}
+    ol
+    each item in items
+      li <a type= "submit" class= "lnk" name= "edit" value=#{item._id} href="updatequestion/#{item._id}" onclick: 'captureData()'> Question: #{item.question} </br>
+      | Answer: #{item.answer} </br>
+      | Author: #{item.author} </br> </a>
+  </form>
+
+  //.script
+  //var captureData = function(){(#{item._id}) ? objectToPass._id = #{item._id} : objectToPass._id}; 

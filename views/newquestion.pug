@@ -1,0 +1,27 @@
+extends layout
+ 
+block content
+    h1= title
+    
+    if errors
+        for error in errors
+            p #{error.msg} 
+
+    <form name="add-estimation", method="post", class= "questionForm">
+            div.input Question
+                <input type="text" name="question" value='#{item.question}' class= "questionField"></input>
+            div.input
+                span.label Answer 
+                <textarea name="answer" cols="80" rows="20" class= "questionField">#{item.answer}</textarea>
+            div.input
+                span.label Author
+                <input type="text", name="author", value= '#{item.author}' class= "questionField">
+            div.actions
+                <input type="submit", name= "submit", value= '#{buttonText}' class= "questionField">
+                
+    </form>
+    
+    a(href="/")
+        button(type="button", class= "backBtn") Back
+
+    

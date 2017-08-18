@@ -1,0 +1,25 @@
+extends layout
+
+
+
+block content
+
+
+
+  h1= title
+  //-p Welcome to #{title}
+  <p class="loggedIn">#{loggedIn}</p>
+  <form method= "POST" class= "form">
+    <button type= "submit", class= "btn", name="addNew", value= "addNew", href="newquestion"> #{buttonText}</button>
+    <fieldset>
+    <legend>Click on question to edit</legend>
+    each item in items
+      <button type= "submit" class= "questionBtn" class= "lnk" name= "edit" value=#{item._id} href="updatequestion/#{item._id}">
+      | Question: #{item.question} </br>
+      //-| Answer: #{item.answer} </br>
+      | Author: #{item.author} </br> </button>
+    </fieldset>
+  </form>
+
+  //.script
+  //var captureData = function(){(#{item._id}) ? objectToPass._id = #{item._id} : objectToPass._id}; 

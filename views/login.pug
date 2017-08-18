@@ -1,0 +1,20 @@
+block content
+    h1= title
+    
+    if errors
+        for error in errors
+            p #{error.msg} 
+
+    <form name="add-estimation", method="post", class= "questionForm">
+            div.input Username
+                <input type="text" name="username" class= "questionField"></input>
+            div.input
+                span.label Password 
+                <input type="text" name="password" class= "questionField"></input>
+            div.actions
+                <input type="submit", name= "submit", class= "questionField">
+                
+    </form>
+    
+    a(href="/")
+        button(type="button", class= "backBtn") Back

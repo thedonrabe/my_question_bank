@@ -1,0 +1,34 @@
+extends layout
+ 
+block content
+    h1= title
+    
+    if errors
+        for error in errors
+            p #{error.msg} 
+
+    <form name="add-estimation", method="post", class= "questionForm">
+            div.input
+                span.label First Name
+                <input type="text", name="firstName", class= "questionField">
+            div.input
+                span.label Last Name
+                <input type="text", name="lastName", class= "questionField">
+            div.input Username
+                <input type="text" name="username" class= "questionField"></input>
+            div.input
+                span.label Password 
+                <input type="text" name="password" class= "questionField"></input>
+            div.input
+                span.label Email
+                <input type="text", name="email", class= "questionField">
+            
+            div.actions
+                <input type="submit", name= "submit", class= "questionField">
+                
+    </form>
+    
+    a(href="/")
+        button(type="button", class= "backBtn") Back
+
+    
