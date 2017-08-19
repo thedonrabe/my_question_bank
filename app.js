@@ -31,7 +31,7 @@ app.use(function(req, res, next) {
     jwt.verify(app.get("token"), app.get("secret"), function(err, decode) {
       if (err) req.user = undefined;
       //console.log(decode);
-      console.log("SUCCESSSSS!!");
+      //console.log("SUCCESSSSS!!");
       req.user = decode;
       next();
     });

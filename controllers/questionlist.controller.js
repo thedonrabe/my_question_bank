@@ -50,32 +50,37 @@ exports.getQuestionList = function(req, res, next) {
       //console.log(results);
 
       //}
+      // console.log("sdafdsfa");
+      // console.log(req.user);
+      // //console.log(req.info);
+      // if (res.app.get("token")) {
+      //   jwt.verify(res.app.get("token"), res.app.get("secret"), function(
+      //     err,
+      //     decode
+      //   ) {
+      //     if (err) req.user = undefined;
+      //     //console.log(decode);
+      //     console.log("SUCCESSSSS!!");
+      //     //req.user = decode;
+      //     console.log(decode._doc.username);
 
-      //console.log(req.info);
-      if (res.app.get("token")) {
-        jwt.verify(res.app.get("token"), res.app.get("secret"), function(
-          err,
-          decode
-        ) {
-          if (err) req.user = undefined;
-          console.log(decode);
-          console.log("SUCCESSSSS!!");
-          //req.user = decode;
-          console.log(decode._doc.username);
+      var loggedInText =
+        req.user != "undefined"
+          ? req.user._doc.username + " logged in"
+          : "not logged in";
 
-          var loggedInText = decode._doc.username
-            ? decode._doc.username + req.user.username + " logged in"
-            : "not logged in";
+      //console.log(loggedInText);
+      //next();
+      //});
+      //}
 
-          res.render("index1", {
-            title: "Question List",
-            items: results,
-            buttonText: "Add New Quesition",
-            loggedIn: loggedInText
-          });
-          //next();
-        });
-      }
+      console.log(loggedInText);
+      res.render("index1", {
+        title: "Question List",
+        items: results,
+        buttonText: "Add New Quesition",
+        loggedIn: loggedInText
+      });
     }
   );
 };
