@@ -10,18 +10,18 @@ block content
     <form name="add-estimation", method="post", class= "questionForm">
             div.input
                 span.label First Name
-                <input type="text", name="firstName", class= "questionField">
+                <input type="text", name="firstName", class= "questionField" value= #{firstName}>
             div.input
                 span.label Last Name
-                <input type="text", name="lastName", class= "questionField">
+                <input type="text", name="lastName", class= "questionField" value= #{lastName}>
             div.input Username
-                <input type="text" name="username" class= "questionField"></input>
+                <input type="text" name="username" class= "questionField" value= #{username}></input>
             div.input
                 span.label Password 
-                <input type="text" name="password" class= "questionField"></input>
+                <input type="text" name="password" class= "questionField" value= #{password}></input>
             div.input
                 span.label Email
-                <input type="text", name="email", class= "questionField">
+                <input type="text", name="email", class= "questionField" value= #{email}>
             
             div.actions
                 <input type="submit", name= "submit", class= "questionField">

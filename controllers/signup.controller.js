@@ -17,7 +17,7 @@ exports.createUserObj = function(req, res, next) {
   req.checkBody("firstName", "Please enter your first name").notEmpty();
   //console.log(req.body.question);
   //req.sanitize("question").checkCasing(); //.checkCasing();
-  console.log(req.body.question);
+  console.log("asdfklasdfkljsdlkj" + req.body.firstName);
   //req.sanitize("firstName").escape();
   req.sanitize("firstName").trim();
   req.checkBody("lastName", "Please enter your last name").notEmpty();
@@ -63,12 +63,13 @@ exports.createUserObj = function(req, res, next) {
             success: false,
             message: "A User Has Already Been Created With This Email Address"
           });
-        } else if (date.username == req.body.username) {
+        } else if (data.username == req.body.username) {
           res.json({
             success: false,
             message: "This username is taken"
           });
-        } else if (!data) {
+        } else {
+          //if (!data) {
           // hash the password and send the new user into database
           bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(req.body.password, salt, function(err, hash) {
