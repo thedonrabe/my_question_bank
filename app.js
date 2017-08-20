@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
   if (app.get("token")) {
     jwt.verify(app.get("token"), app.get("secret"), function(err, decode) {
       if (err) req.user = undefined;
-      //console.log(decode);
+      console.log(decode);
       //console.log("SUCCESSSSS!!");
       req.user = decode;
       next();

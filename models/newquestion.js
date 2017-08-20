@@ -4,7 +4,7 @@ var schema = require("mongoose").Schema;
 
 var newQuestionSchema = new schema(
   {
-    _id: String,
+    //_id: String,
     question: String,
     answer: String,
     author: String

@@ -2,23 +2,20 @@ var router = require("express").Router;
 var user = require("../models/user");
 var bcrypt = require("bcrypt");
 var jwt = require("jsonwebtoken");
-var questions = require("../models/newquestion");
+var users = require("../models/user");
 //var app = require("../app");
 
 exports.getSignUp = function(req, res, next) {
-  //console.log(req.question + "<---this");
+  // render the signup page
   res.render("signup", {
     title: "Sign Up"
   });
 };
 
 exports.createUserObj = function(req, res, next) {
-  // validation
+  // validate client inputs and check inputted user data
   req.checkBody("firstName", "Please enter your first name").notEmpty();
-  //console.log(req.body.question);
-  //req.sanitize("question").checkCasing(); //.checkCasing();
-  console.log("asdfklasdfkljsdlkj" + req.body.firstName);
-  //req.sanitize("firstName").escape();
+  //req.sanitize("question").checkCasing(); // special custom validator created in app.js
   req.sanitize("firstName").trim();
   req.checkBody("lastName", "Please enter your last name").notEmpty();
   req.sanitize("lastName").escape();
@@ -29,13 +26,12 @@ exports.createUserObj = function(req, res, next) {
   req.checkBody("password", "Please enter a password").notEmpty();
   //req.sanitize("password").escape();
   req.sanitize("password").trim();
-  req.checkBody("email", "Please enter a valid email address").isEmail();
-  //req.checkBody("email", "Please enter a valid email address").isEmail();
-  //req.sanitize("email").escape();
   req.sanitize("email").trim();
+  req.checkBody("email", "Please enter a valid email address").isEmail();
+
   var errs = req.validationErrors();
   if (errs) {
-    //console.log(data + "<---this");
+    // if the user hasn't filled in the required fields rerender and tell user
     res.render("signup", {
       title: "Sign In",
       errors: errs,
@@ -44,33 +40,36 @@ exports.createUserObj = function(req, res, next) {
       username: req.body.username,
       email: req.body.email
     });
-    //return;
   } else {
-    questions.aggregate(
-      [
-        {
-          $match: {
-            email: req.body.email,
-            username: req.body.username
-          }
-        }
-      ],
+    // first check if the user data entered already exists in the db
+    users.findOne(
+      { $or: [{ email: req.body.email }, { username: req.body.username }] },
       function(err, data) {
         if (err) throw err;
 
-        if (data.email == req.body.email) {
-          res.json({
-            success: false,
-            message: "A User Has Already Been Created With This Email Address"
-          });
-        } else if (data.username == req.body.username) {
-          res.json({
-            success: false,
-            message: "This username is taken"
-          });
+        // if the db search finds a user with entered data already in the system handle it
+        if (data) {
+          // if the data matches tell user that is already exists
+          if (
+            data.email == req.body.email ||
+            data.username == req.body.username
+          ) {
+            res.render("signup", {
+              title: "Sign In",
+              errors: [
+                {
+                  msg:
+                    "A User Has Already Been Created With This Email Address or Username. Choose another or sign in."
+                }
+              ],
+              firstName: req.body.firstName,
+              lastName: req.body.lastName,
+              username: req.body.username,
+              email: req.body.email
+            });
+          }
         } else {
-          //if (!data) {
-          // hash the password and send the new user into database
+          // if the user isn't already in the db hash the password
           bcrypt.genSalt(10, function(err, salt) {
             bcrypt.hash(req.body.password, salt, function(err, hash) {
               var tempUser = new user({
@@ -80,8 +79,8 @@ exports.createUserObj = function(req, res, next) {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName
               });
-              console.log(hash);
-              console.log(tempUser);
+
+              // save the new user to the db
               tempUser.save(function(err, payload) {
                 if (err) return next(err);
               });
@@ -91,10 +90,11 @@ exports.createUserObj = function(req, res, next) {
                 expiresIn: 3600
               });
 
+              // set the token value in the app.locals.token
               res.app.set("token", token);
-              //req.headers.authoriztion = "Bearer " + token;
 
-              console.log(token);
+              // test outputs
+              // console.log(token);
               //     res.json({
               //       success: true,
               //       token: token

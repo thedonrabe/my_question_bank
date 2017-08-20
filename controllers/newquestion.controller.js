@@ -31,10 +31,6 @@ exports.postNewQuestion = function(req, res, next) {
   req.sanitize("author").escape();
   req.sanitize("author").trim();
 
-  //req.sanitize('question').escape();
-  //req.sanitize('answer').escape();
-  //req.sanitize('question').escape();
-
   var errs = req.validationErrors();
   console.log(errs);
   var data = new newQuestion({
@@ -59,7 +55,6 @@ exports.postNewQuestion = function(req, res, next) {
         author: req.body.author
       }
     });
-    //return;
   } else {
     data.save(function(err, payload) {
       if (err) return next(err);
